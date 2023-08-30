@@ -10,7 +10,7 @@ defaults:
   min_assistant_tokens: 25
   output_dir_suffix: ""
 
-llama2:
+llama2_de:
   vocab_file: "huggingface/hub/models--meta-llama--Llama-2-7b-hf/snapshots/6fdf2e60f86ff2481f2241aaee459f85b5b0bbb9/tokenizer.model"
   tokenizer_type: "SentencePieceTokenizer"
   output_dir_suffix: "_llama2"
