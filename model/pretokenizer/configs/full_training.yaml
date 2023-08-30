@@ -11,7 +11,7 @@ defaults:
   output_dir_suffix: ""
 
 llama2_de:
-  vocab_file: "huggingface/hub/models--meta-llama--Llama-2-7b-hf/snapshots/6fdf2e60f86ff2481f2241aaee459f85b5b0bbb9/tokenizer.model"
+  vocab_file: "/pfss/laion/huggingface/hub/models--meta-llama--Llama-2-7b-hf/snapshots/6fdf2e60f86ff2481f2241aaee459f85b5b0bbb9/tokenizer.model"
   tokenizer_type: "SentencePieceTokenizer"
   output_dir_suffix: "_llama2"
 
@@ -24,21 +24,21 @@ oasst_de:
 evol_instruct_de:
   datasets:
     - sharegpt:
-        dataset_name: "FreedomIntelligence/evol-instruct-deutsch"
+        hf_dataset_name: "FreedomIntelligence/evol-instruct-deutsch"
   output_dir: "output/evol_instruct_de"
   filename_prefix: "evol_instruct_de"
 
 alpaca_gpt4_de:
   datasets:
     - sharegpt:
-        dataset_name: "FreedomIntelligence/alpaca-gpt4-deutsch"
+        hf_dataset_name: "FreedomIntelligence/alpaca-gpt4-deutsch"
   output_dir: "output/alpaca_gpt4_de"
   filename_prefix: "alpaca_gpt4_de"
 
 openplatypus_de:
   datasets:
     - openplatypus:
-        dataset_name: "LeoLM/OpenSchnabeltier"
+        hf_dataset_name: "LeoLM/OpenSchnabeltier"
   output_dir: "output/openplatypus_de"
   filename_prefix: "openplatypus_de"
 
@@ -46,8 +46,8 @@ german_combined:
   datasets:
     - oasst_de
     - sharegpt:
-        dataset_name: "FreedomIntelligence/evol-instruct-deutsch"
+        hf_dataset_name: "FreedomIntelligence/evol-instruct-deutsch"
     - sharegpt:
-        dataset_name: "FreedomIntelligence/alpaca-gpt4-deutsch"
+        hf_dataset_name: "FreedomIntelligence/alpaca-gpt4-deutsch"
     - openplatypus:
-        dataset_name: "LeoLM/OpenSchnabeltier"
+        hf_dataset_name: "LeoLM/OpenSchnabeltier"
