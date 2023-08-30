@@ -761,8 +761,8 @@ class ShareGPT(Dataset):
     def _process_instruction(self, row: dict[str, str]) -> DatasetEntry | None:
         return create_dataset_entry_qa(
             mode=self.mode,
-            questions=[row["conversations"][i]["value"] for i in range(0, len(row["conversation"]), 2)],
-            answers=[row["conversations"][i]["value"] for i in range(1, len(row["conversation"]), 2)],
+            questions=[row["conversations"][i]["value"] for i in range(0, len(row["conversations"]), 2)],
+            answers=[row["conversations"][i]["value"] for i in range(1, len(row["conversations"]), 2)],
         )
        
     def __len__(self) -> int:
