@@ -1,0 +1,53 @@
+defaults:
+  rng_seed: 42
+  cache_dir: /pfss/laios/huggingface/datasets
+  use_system_prefix: false
+  datasets_extra: [] # For config options to add additional datasets, since yaml doesn't let us extend arrays
+  eval_size:
+  tokenizer_type:
+  vocab_extra_ids_list: "<|im_start|>,<|im_end|>"
+  dataset_impl: "mmap"
+  min_assistant_tokens: 25
+  output_dir_suffix: ""
+
+llama2:
+  vocab_file: "/pfss/laion/huggingface/hub/llama2-7b/tokenizer.model"
+  tokenizer_type: "SentencePieceTokenizer"
+  output_dir_suffix: "_llama2"
+
+oasst_de:
+  datasets:
+    - oasst_de
+  output_dir: "output/oasst_de"
+  filename_prefix: "oasst_de"
+
+evol_instruct_de:
+  datasets:
+    - sharegpt:
+        dataset_name: "FreedomIntelligence/evol-instruct-deutsch"
+  output_dir: "output/evol_instruct_de"
+  filename_prefix: "evol_instruct_de"
+
+alpaca_gpt4_de:
+  datasets:
+    - sharegpt:
+        dataset_name: "FreedomIntelligence/alpaca-gpt4-deutsch"
+  output_dir: "output/alpaca_gpt4_de"
+  filename_prefix: "alpaca_gpt4_de"
+
+openplatypus_de:
+  datasets:
+    - openplatypus:
+        dataset_name: "LeoLM/OpenSchnabeltier"
+  output_dir: "output/openplatypus_de"
+  filename_prefix: "openplatypus_de"
+
+german_combined:
+  datasets:
+    - oasst_de
+    - sharegpt:
+        dataset_name: "FreedomIntelligence/evol-instruct-deutsch"
+    - sharegpt:
+        dataset_name: "FreedomIntelligence/alpaca-gpt4-deutsch"
+    - openplatypus:
+        dataset_name: "LeoLM/OpenSchnabeltier"

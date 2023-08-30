@@ -28,6 +28,9 @@ from model_training.custom_datasets.qa_datasets import (
     WebGPT,
     WizardEvolInstructV2,
     load_alpaca_dataset,
+    ShareGPT,
+    OpenPlatypus,
+    OASST_DE
 )
 from model_training.custom_datasets.rank_datasets import AugmentedOA
 from model_training.custom_datasets.summarization import HFSummary, HFSummaryPairs, SummarizationDataset
@@ -190,6 +193,12 @@ def get_one_dataset(
         dataset = DolphinMix(cache_dir=data_path, **kwargs)
     elif dataset_name in RAG_DATASETS.keys():
         dataset = RAGDataset(dataset_name, cache_dir=data_path, **kwargs)
+    elif dataset_name == "sharegpt":
+        dataset = ShareGPT(cache_dir=data_path, **kwargs)
+    elif dataset_name == "openplatypus":
+        dataset = OpenPlatypus(cache_dir=data_path, **kwargs)
+    elif dataset_name == "oasst_de":
+        dataset = OASST_DE(cache_dir=data_path, **kwargs)
     else:
         raise ValueError(f"Unknown dataset {dataset_name}")
 

@@ -718,3 +718,82 @@ class GPTeacher_Roleplay(Dataset):
     def __getitem__(self, index: int) -> DatasetEntry:
         dialogue = self.rows[index]
         return dialogue
+
+
+class OpenPlatypus(Dataset):
+    def __init__(self, dataset_name: str, cache_dir: str | Path, mode: str = "sft") -> None:
+        super().__init__()
+        self.rows = []
+        if mode not in ("sft", "rl"):
+            raise NotImplementedError(f"Currently only the modes 'sft' and 'rl' are implemented. Received {mode}.")
+        self.mode = mode
+        data = load_dataset(dataset_name, cache_dir=cache_dir)
+        for line in data["train"]:
+            if (conv := self._process_instruction(line)) is not None:
+                self.rows.append(conv)
+
+    def _process_instruction(self, row: dict[str, str]) -> DatasetEntry | None:
+        return create_dataset_entry_qa(
+            mode=self.mode,
+            questions=[row["instruction_de"]],
+            answers=[row["output_de"]],
+        )
+       
+    def __len__(self) -> int:
+        return len(self.rows)
+
+    def __getitem__(self, index: int) -> DatasetEntry:
+        dialogue = self.rows[index]
+        return dialogue
+    
+class ShareGPT(Dataset):
+    def __init__(self, dataset_name: str, cache_dir: str | Path, mode: str = "sft") -> None:
+        super().__init__()
+        self.rows = []
+        if mode not in ("sft", "rl"):
+            raise NotImplementedError(f"Currently only the modes 'sft' and 'rl' are implemented. Received {mode}.")
+        self.mode = mode
+        data = load_dataset(dataset_name, cache_dir=cache_dir)
+        for line in data["train"]:
+            if (conv := self._process_instruction(line)) is not None:
+                self.rows.append(conv)
+
+    def _process_instruction(self, row: dict[str, str]) -> DatasetEntry | None:
+        return create_dataset_entry_qa(
+            mode=self.mode,
+            questions=[row["conversation"][i]["value"] for i in range(0, len(row["conversation"]), 2)],
+            answers=[row["conversation"][i]["value"] for i in range(1, len(row["conversation"]), 2)],
+        )
+       
+    def __len__(self) -> int:
+        return len(self.rows)
+
+    def __getitem__(self, index: int) -> DatasetEntry:
+        dialogue = self.rows[index]
+        return dialogue
+    
+class OASST_DE(Dataset):
+    def __init__(self, cache_dir: str | Path, mode: str = "sft") -> None:
+        super().__init__()
+        self.rows = []
+        if mode not in ("sft", "rl"):
+            raise NotImplementedError(f"Currently only the modes 'sft' and 'rl' are implemented. Received {mode}.")
+        self.mode = mode
+        data = load_dataset("bjoernp/high_quality_oasst_de", cache_dir=cache_dir)
+        for line in data["train"]:
+            if (conv := self._process_instruction(line)) is not None:
+                self.rows.append(conv)
+
+    def _process_instruction(self, row: dict[str, str]) -> DatasetEntry | None:
+        return create_dataset_entry_qa(
+            mode=self.mode,
+            questions=[row["conversation"][i]["text"] for i in range(0, len(row["conversation"]), 2)],
+            answers=[row["conversation"][i]["text"] for i in range(1, len(row["conversation"]), 2)],
+        )
+       
+    def __len__(self) -> int:
+        return len(self.rows)
+
+    def __getitem__(self, index: int) -> DatasetEntry:
+        dialogue = self.rows[index]
+        return dialogue
