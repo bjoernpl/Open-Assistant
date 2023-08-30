@@ -1,12 +1,14 @@
 from pathlib import Path
 from typing import Iterable, Literal, Optional
 
-from model_training.custom_datasets.formatting import DatasetEntrySft, Role, Utterance
+from formatting import DatasetEntrySft, Role, Utterance
 from oasst_data import ExportMessageNode, read_dataset_message_trees, read_message_trees, visit_threads_depth_first
 from oasst_data.schemas import ExportMessageTree
 from torch import Generator
 from torch.utils.data import Dataset, random_split
-
+import fire
+from datasets import Dataset as HFDataset
+from datasets import DatasetDict
 
 class ListDataset(Dataset):
     def __init__(self, data: list):
@@ -21,11 +23,11 @@ class ListDataset(Dataset):
 
 
 def load_oasst_export(
-    input_file_path: Optional[str | Path] = None,
-    hf_dataset_name: Optional[str] = "OpenAssistant/oasst1",
-    val_split: float = 0.2,
-    lang: str = "en",
-    top_k: Optional[int] = None,
+    input_file_path: Optional[str | Path] = "/mnt/o/code/oasst_data/2023-08-25_oasst_ready.jsonl",
+    hf_dataset_name: Optional[str] = None,
+    val_split: float = 0.05,
+    lang: str = "de",
+    top_k: Optional[int] = 1,
     manual_seed: int = 287631038922,
     data_path: str | Path = None,
     mode: Literal["sft", "rm", "rl"] = "sft",
@@ -161,4 +163,16 @@ def load_oasst_export(
     else:
         print(f"OASST HF dataset {hf_dataset_name}: {len(train)=}, {len(val)=}")
 
-    return train, val
+    def gen(d):
+        for x in d:
+            yield x.dict()
+
+    ds = HFDataset.from_generator(lambda: gen(train))
+    ds_val = HFDataset.from_generator(lambda: gen(val))
+    full_ds = DatasetDict({"train": ds, "validation": ds_val})
+    full_ds.push_to_hub("bjoernp/oasst25-08-23-de", private=True)
+    return full_ds
+
+
+if __name__ == "__main__":
+    fire.Fire(load_oasst_export)
