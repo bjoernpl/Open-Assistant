@@ -721,11 +721,13 @@ class GPTeacher_Roleplay(Dataset):
 
 
 class OpenPlatypus(Dataset):
-    def __init__(self, hf_name: str, cache_dir: str | Path, mode: str = "sft") -> None:
+    def __init__(self, hf_name: str, cache_dir: str | Path, mode: str = "sft", instruct_column="instruction_de", output_column="output_de") -> None:
         super().__init__()
         self.rows = []
         if mode not in ("sft", "rl"):
             raise NotImplementedError(f"Currently only the modes 'sft' and 'rl' are implemented. Received {mode}.")
+        self.instruct_column = instruct_column
+        self.output_column = output_column
         self.mode = mode
         data = load_dataset(hf_name, cache_dir=cache_dir)
         for line in data["train"]:
@@ -735,8 +737,8 @@ class OpenPlatypus(Dataset):
     def _process_instruction(self, row: dict[str, str]) -> DatasetEntry | None:
         return create_dataset_entry_qa(
             mode=self.mode,
-            questions=[row["instruction_de"]],
-            answers=[row["output_de"]],
+            questions=[row[self.instruct_column]],
+            answers=[row[self.output_column]],
         )
        
     def __len__(self) -> int:
@@ -773,13 +775,13 @@ class ShareGPT(Dataset):
         return dialogue
     
 class OASST_DE(Dataset):
-    def __init__(self, cache_dir: str | Path, mode: str = "sft") -> None:
+    def __init__(self, hf_name:str, cache_dir: str | Path, mode: str = "sft") -> None:
         super().__init__()
         self.rows = []
         if mode not in ("sft", "rl"):
             raise NotImplementedError(f"Currently only the modes 'sft' and 'rl' are implemented. Received {mode}.")
         self.mode = mode
-        data = load_dataset("bjoernp/high_quality_oasst_de", cache_dir=cache_dir)
+        data = load_dataset(hf_name, cache_dir=cache_dir)
         for line in data["train"]:
             if (conv := self._process_instruction(line)) is not None:
                 self.rows.append(conv)

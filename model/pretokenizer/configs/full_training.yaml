@@ -44,10 +44,81 @@ openplatypus_de:
 
 german_combined:
   datasets:
-    - oasst_de
+    - oasst_de:
+        hf_name: "bjoernp/high_quality_oasst_de"
     - sharegpt:
         hf_name: "FreedomIntelligence/evol-instruct-deutsch"
     - sharegpt:
         hf_name: "FreedomIntelligence/alpaca-gpt4-deutsch"
     - openplatypus:
         hf_name: "LeoLM/OpenSchnabeltier"
+  filename_prefix: "german_all"       
+
+german_pre_1:
+  datasets:
+    - openplatypus:
+        hf_name: "LeoLM/OpenSchnabeltier"
+    - beluga_chat
+    - sharegpt:
+        hf_name: "FreedomIntelligence/evol-instruct-deutsch"
+    - sharegpt:
+        hf_name: "FreedomIntelligence/alpaca-gpt4-deutsch"
+    - sharegpt:
+        hf_name: "bjoernp/german_songs_conversation"
+    - openplatypus:
+        hf_name: "bjoernp/poem_analyses"
+        instruct_column: "prompt"
+        output_column: "response"
+    - openplatypus:
+        hf_name: "bjoernp/german_poems_gpt4"
+        instruct_column: "prompt"
+        output_column: "poem"
+  filename_prefix: "german_pre_1"
+
+german_pre_2:
+  datasets:
+    - oasst_de:
+        hf_name: "bjoernp/high_quality_oasst_de"
+  filename_prefix: "german_pre_2"
+
+bilingual_pre_1:
+  datasets:
+    - openplatypus:
+        hf_name: "LeoLM/OpenSchnabeltier"
+    - openplatypus:
+        hf_name: "garage-bAInd/Open-Platypus"
+        instruct_column: "instruction"
+        output_column: "output"
+    - beluga_chat
+    - beluga_chat:
+        hf_name: "CarperAI/orca-gpt4-100k-cleaned"
+        system_column: "system"
+        prompt_column: "prompt"
+        response_column: "response"
+    - openplatypus:
+        hf_name: "WizardLM/WizardLM_evol_instruct_70k"
+        instruct_column: "instruction"
+        output_column: "output"
+    - sharegpt:
+        hf_name: "FreedomIntelligence/evol-instruct-deutsch"
+    - sharegpt:
+        hf_name: "FreedomIntelligence/alpaca-gpt4-deutsch"
+    - sharegpt:
+        hf_name: "bjoernp/german_songs_conversation"
+    - openplatypus:
+        hf_name: "bjoernp/poem_analyses"
+        instruct_column: "prompt"
+        output_column: "response"
+    - openplatypus:
+        hf_name: "bjoernp/german_poems_gpt4"
+        instruct_column: "prompt"
+        output_column: "poem"
+  filename_prefix: "bilingual_pre_1"
+
+bilingual_pre_2:
+  datasets:
+    - oasst_de:
+        hf_name: "bjoernp/high_quality_oasst_de"
+    - oasst_de:
+        hf_name: "bjoernp/oasst25-08-23-filtered"
+  filename_prefix: "bilingual_pre_2"

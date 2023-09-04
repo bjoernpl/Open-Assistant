@@ -195,6 +195,33 @@ class OrcaChat(Dataset):
         return DatasetEntrySft(conversation=conv_utt, system_message=instruction)
 
 
+class BelugaChat(Dataset):
+    name = "beluga_chat"
+
+    def __init__(self, hf_name="bjoernp/beluga_gpt4_de", cache_dir: str = None, system_column="system_de", prompt_column="prompt_de", response_column="response_de") -> None:
+        self.dataset = load_dataset(hf_name, split="train", cache_dir=cache_dir)
+        self.system_column = system_column
+        self.prompt_column = prompt_column
+        self.response_column = response_column
+
+    def __len__(self):
+        return len(self.dataset)
+
+    def __getitem__(self, idx):
+        system, prompt, response = [self.dataset[idx][key] for key in (self.system_column, self.prompt_column, self.response_column)]
+        conv_utt: list[Utterance] = [
+            (
+                Utterance(
+                    text=conv,
+                    role=Role.prompter if i % 2 == 0 else Role.assistant,
+                )
+            )
+            for i, conv in enumerate([prompt, response])
+        ]
+
+        return DatasetEntrySft(conversation=conv_utt, system_message=system)
+
+
 class DolphinMix(Dataset):
     name = "dophin-mix"
 
