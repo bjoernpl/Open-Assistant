@@ -1,6 +1,6 @@
 defaults:
   rng_seed: 42
-  cache_dir: /pfss/laios/huggingface/datasets
+  cache_dir: /pfss/laion/huggingface/datasets
   use_system_prefix: false
   datasets_extra: [] # For config options to add additional datasets, since yaml doesn't let us extend arrays
   eval_size:
