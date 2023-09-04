@@ -63,7 +63,7 @@ german_pre_1:
         hf_name: "FreedomIntelligence/evol-instruct-deutsch"
     - sharegpt:
         hf_name: "FreedomIntelligence/alpaca-gpt4-deutsch"
-    - sharegpt:
+    - oasst_de:
         hf_name: "bjoernp/german_songs_conversation"
     - openplatypus:
         hf_name: "bjoernp/poem_analyses"
@@ -103,7 +103,7 @@ bilingual_pre_1:
         hf_name: "FreedomIntelligence/evol-instruct-deutsch"
     - sharegpt:
         hf_name: "FreedomIntelligence/alpaca-gpt4-deutsch"
-    - sharegpt:
+    - oasst_de:
         hf_name: "bjoernp/german_songs_conversation"
     - openplatypus:
         hf_name: "bjoernp/poem_analyses"
