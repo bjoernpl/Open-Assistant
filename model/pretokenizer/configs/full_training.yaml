@@ -7,7 +7,7 @@ defaults:
   tokenizer_type:
   vocab_extra_ids_list: "<|im_start|>,<|im_end|>"
   dataset_impl: "mmap"
-  min_assistant_tokens: 25
+  min_assistant_tokens: 10
   output_dir_suffix: ""
 
 llama2_de:
@@ -58,19 +58,25 @@ german_combinedv2:
   datasets:
     - oasst_de:
         hf_name: "bjoernp/high_quality_oasst_de"
+        val_split: 0.05
     - sharegpt:
         hf_name: "FreedomIntelligence/evol-instruct-deutsch"
+        val_split: 0.02
     - sharegpt:
         hf_name: "FreedomIntelligence/alpaca-gpt4-deutsch"
+        val_split: 0.02
     - openplatypus:
         hf_name: "LeoLM/OpenSchnabeltier"
+        val_split: 0.02
     - oasst_de:
         hf_name: "bjoernp/german_songs_conversation"
+        val_split: 0.02
     - openplatypus:
         hf_name: "bjoernp/german_poems_gpt4"
         instruct_column: "prompt"
         output_column: "poem"
-  filename_prefix: "german_all"      
+        val_split: 0.02
+  filename_prefix: "german_combinedv2"      
 
 german_pre_1:
   datasets:
