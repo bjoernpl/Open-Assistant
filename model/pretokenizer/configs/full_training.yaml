@@ -52,7 +52,25 @@ german_combined:
         hf_name: "FreedomIntelligence/alpaca-gpt4-deutsch"
     - openplatypus:
         hf_name: "LeoLM/OpenSchnabeltier"
-  filename_prefix: "german_all"       
+  filename_prefix: "german_all"      
+
+german_combinedv2:
+  datasets:
+    - oasst_de:
+        hf_name: "bjoernp/high_quality_oasst_de"
+    - sharegpt:
+        hf_name: "FreedomIntelligence/evol-instruct-deutsch"
+    - sharegpt:
+        hf_name: "FreedomIntelligence/alpaca-gpt4-deutsch"
+    - openplatypus:
+        hf_name: "LeoLM/OpenSchnabeltier"
+    - oasst_de:
+        hf_name: "bjoernp/german_songs_conversation"
+    - openplatypus:
+        hf_name: "bjoernp/german_poems_gpt4"
+        instruct_column: "prompt"
+        output_column: "poem"
+  filename_prefix: "german_all"      
 
 german_pre_1:
   datasets:
